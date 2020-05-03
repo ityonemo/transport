@@ -13,8 +13,7 @@ defmodule TransportTest.ActiveClient do
   @localhost {127, 0, 0, 1}
 
   def init(data = %{transport: transport}) do
-    transport_opts = [:binary, active: false]
-    {:ok, socket} = transport.connect(@localhost, data.port, transport_opts)
+    {:ok, socket} = transport.connect(@localhost, data.port)
     {:ok, upgraded} = transport.upgrade(socket, [active: true] ++ data.opts)
     {:ok, Map.merge(data, %{socket: upgraded, type: transport.type()})}
   end

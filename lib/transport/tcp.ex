@@ -8,17 +8,26 @@ defmodule Transport.Tcp do
 
   @type socket :: Transport.socket
 
+  @connection_opts [:binary, active: false]
+
+  @impl true
   @spec listen(:inet.port_number, keyword) :: {:ok, socket} | {:error, term}
   @doc "Callback implementation for `c:Transport.listen/2`."
-  defdelegate listen(port, opts), to: :gen_tcp
+  def listen(port, opts \\ []) do
+    :gen_tcp.listen(port, @connection_opts ++ opts)
+  end
+
+  @impl true
+  @spec connect(term, :inet.port_number) :: {:ok, socket} | {:error, term}
+  @spec connect(term, :inet.port_number, keyword) :: {:ok, socket} | {:error, term}
+  @doc "Callback implementation for `c:Transport.connect/3`."
+  def connect(host, port, opts \\ []) do
+    :gen_tcp.connect(host, port, @connection_opts ++ opts)
+  end
 
   @spec accept(socket, timeout) :: {:ok, socket} | {:error, term}
   @doc "Callback implementation for `c:Transport.accept/2`."
   defdelegate accept(sock, timeout), to: :gen_tcp
-
-  @spec connect(term, :inet.port_number, keyword) :: {:ok, socket} | {:error, term}
-  @doc "Callback implementation for `c:Transport.connect/3`."
-  defdelegate connect(host, port, opts), to: :gen_tcp
 
   @spec recv(socket, non_neg_integer) :: {:ok, binary} | {:error, term}
   @doc "Callback implementation for `c:Transport.recv/2`, via `:gen_tcp.recv/2`."

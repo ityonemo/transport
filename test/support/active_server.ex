@@ -11,9 +11,7 @@ defmodule TransportTest.ActiveServer do
   end
 
   def init(data = %{transport: transport}) do
-    # TODO: make binary/not active the defaults
-    transport_opts = [:binary, active: false]
-    {:ok, socket} = transport.listen(0, transport_opts)
+    {:ok, socket} = transport.listen(0)
     {:ok, port}   = :inet.port(socket)
     Process.send_after(self(), {:accept, socket}, 0)
     {:ok, Map.merge(data, %{port: port, type: transport.type()})}

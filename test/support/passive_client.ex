@@ -13,8 +13,7 @@ defmodule TransportTest.PassiveClient do
   @localhost {127, 0, 0, 1}
 
   def init(state = %{transport: transport}) do
-    transport_opts = [:binary, active: false]
-    {:ok, socket} = transport.connect(@localhost, state.port, transport_opts)
+    {:ok, socket} = transport.connect(@localhost, state.port)
     {:ok, upgrade} = transport.upgrade(socket, state.opts)
 
     {:ok, Map.put(state, :socket, upgrade)}

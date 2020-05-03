@@ -13,30 +13,16 @@ defmodule Transport.Tls do
 
   @type socket :: Transport.socket
 
-  @impl true
-  @spec listen(:inet.port_number, keyword) :: {:ok, :inet.socket} | {:error, any}
-  @doc """
-  (server) opens a TCP port to listen for incoming connection requests.
-
-  Callback implementation for `c:Transport.listen/2`.
-  """
-  def listen(port, options!) do
-    :gen_tcp.listen(port, options!)
-  end
-
-  defp verify_valid!(opt, key) do
-    filepath = opt[key]
-    unless filepath, do: raise "#{key} not provided"
-    File.exists?(filepath) || raise "#{key} not a valid file"
-  end
+  defdelegate listen(port, options \\ []), to: Transport.Tcp
 
   @spec accept(socket, timeout) :: {:ok, socket} | {:error, term}
   @doc "Callback implementation for `c:Transport.accept/2`."
   defdelegate accept(sock, timeout), to: :gen_tcp
 
+  @spec connect(term, :inet.port_number) :: {:ok, socket} | {:error, term}
   @spec connect(term, :inet.port_number, keyword) :: {:ok, socket} | {:error, term}
   @doc "Callback implementation for `c:Transport.connect/3`."
-  defdelegate connect(host, port, opts), to: :gen_tcp
+  defdelegate connect(host, port, options \\ []), to: Transport.Tcp
 
   @spec send(socket, iodata) :: :ok | {:error, term}
   @doc "Callback implementation for `c:Transport.send/2`, via `:ssl.send/2`."

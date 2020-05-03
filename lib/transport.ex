@@ -47,19 +47,14 @@ defmodule Transport do
 
   Opens the port in `active: false` to ensure correct synchronization of
   `c:handshake/2` and `c:upgrade/2` events.
-
-  NB: tls options provided will be passed into listen to allow servers that
-  require tls options to fail early when launching if the user doesn't supply
-  them.
   """
-  @callback listen(:inet.port_number, keyword)
-  :: {:ok, socket} | {:error, any}
+  @callback listen(:inet.port_number) :: {:ok, socket} | {:error, any}
+  @callback listen(:inet.port_number, keyword) :: {:ok, socket} | {:error, any}
 
   @doc """
   (server) temporarily blocks the server waiting for a connection request.
   """
-  @callback accept(socket, timeout)
-  :: {:ok, socket} | {:error, any}
+  @callback accept(socket, timeout) :: {:ok, socket} | {:error, any}
 
   @doc """
   (server) blocks the server waiting for a connection request until some data
