@@ -11,7 +11,6 @@ defmodule TransportTest.TlsErrors.UnencryptedTest do
   alias TransportTest.PassiveClient, as: Client
   alias TransportTest.PassiveServer, as: Server
 
-  @tag :one
   test "TCP client channel gets closed by server requiring TLS" do
     {:ok, server} = Server.start_link(Tls, self(), tls_opts("server"))
     port = Server.port(server)
@@ -21,5 +20,12 @@ defmodule TransportTest.TlsErrors.UnencryptedTest do
     assert_receive {:server, {:error, {:tls_alert, _}}}
   end
 
-
+  test "TCP server channel times out when client requires TLS" do
+    # this is because a naive TCP server doesn't perform the handshake at all and
+    # can't recoginze what's up.
+    {:ok, server} = Server.start_link(Tcp, self())
+    port = Server.port(server)
+    assert :ignore = Client.start_link(Tls, port, self(), tls_opts("client"))
+    assert_receive {:client, {:error, :timeout}}
+  end
 end

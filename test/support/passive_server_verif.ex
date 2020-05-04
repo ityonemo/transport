@@ -1,6 +1,6 @@
-defmodule TransportTest.PassiveServer do
+defmodule TransportTest.PassiveServerVerif do
 
-  # implements an active: false server that is generic between TCP and SSL.
+  # implements an active: false server that is generic between TCP and SSL which verifies
 
   use GenServer
   import Kernel, except: [send: 2]
