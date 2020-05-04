@@ -3,8 +3,13 @@
 ## Abstraction API for TCP/TLS
 
 Lets you select either TCP or TLS by swapping out mock-able
-modules.  Use at your own risk!  For the moment, this module has not been
-comprehensively reviewed by a security professional.
+modules.
+
+Use at your own risk!  For the moment, this module has not been
+comprehensively reviewed by a security professional.  While many TLS
+failure cases have been tested, the tests are not yet comprehensive.
+
+Pull requests and reviews strongly welcome.
 
 ## Installation
 

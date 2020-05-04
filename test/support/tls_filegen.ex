@@ -48,3 +48,4 @@ defmodule TransportTest.TlsFileGen do
     File.write!(cert_path, Certificate.to_pem(cert))
   end
 end
+

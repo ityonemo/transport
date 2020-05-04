@@ -42,7 +42,6 @@ defmodule Transport.Tls do
 
   Callback implementation for `c:Transport.upgrade/2`.
   """
-  def upgrade(_, nil), do: raise "tls socket not configured"
   def upgrade(socket, upgrade_opts!) do
     socket_opts = Keyword.drop(upgrade_opts!, [:tls_opts])
     upgrade_opts! =
@@ -87,14 +86,7 @@ defmodule Transport.Tls do
     end
   end
 
-  # {:ok, raw_certificate} <- :ssl.peercert(tls_socket)
-  # :ok <- tls_opts![:client_verify_fun].(socket, raw_certificate)
-
   @impl true
   @spec type :: :ssl
   def type, do: :ssl
-
-  defp no_verification(_socket, _raw_cert) do
-    :ok
-  end
 end

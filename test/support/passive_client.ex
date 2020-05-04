@@ -22,14 +22,22 @@ defmodule TransportTest.PassiveClient do
   def send(server, msg), do: GenServer.cast(server, {:send, msg})
 
   def handle_cast({:send, msg}, state = %{transport: transport}) do
-    transport.send(state.socket, msg)
-    Process.send_after(self(), :recv, 0)
+    case transport.send(state.socket, msg) do
+      :ok ->
+        Process.send_after(self(), :recv, 0)
+      err ->
+        Kernel.send(state.test_pid, err)
+    end
     {:noreply, state}
   end
 
   def handle_info(:recv, state = %{transport: transport}) do
-    {:ok, data} = transport.recv(state.socket, 0)
-    Kernel.send(state.test_pid, {:client, data})
+    case transport.recv(state.socket, 0) do
+      {:ok, data} ->
+        Kernel.send(state.test_pid, {:client, data})
+      error ->
+        Kernel.send(state.test_pid, {:client, error})
+    end
     {:noreply, state}
   end
 end

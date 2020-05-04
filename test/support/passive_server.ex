@@ -25,11 +25,16 @@ defmodule TransportTest.PassiveServer do
   def send(server, data), do: GenServer.cast(server, {:send, data})
 
   def handle_info({:accept, accept_socket}, state = %{transport: transport}) do
-    {:ok, socket}  = transport.accept(accept_socket, 500)
-    {:ok, upgrade} = transport.handshake(socket, state.opts)
-    {:ok, data}    = transport.recv(upgrade, 0)
-    Kernel.send(state.test_pid, {:server, data})
-    {:noreply, Map.put(state, :socket, upgrade)}
+    with {:ok, socket}  <- transport.accept(accept_socket, 500),
+         {:ok, upgrade} <- transport.handshake(socket, state.opts),
+         {:ok, data}    <- transport.recv(upgrade, 0) do
+      Kernel.send(state.test_pid, {:server, data})
+      {:noreply, Map.put(state, :socket, upgrade)}
+    else
+      error ->
+        Kernel.send(state.test_pid, {:server, error})
+        {:noreply, state}
+    end
   end
 
   # IMPLEMENTATIONS
