@@ -12,7 +12,9 @@ defmodule Transport.MixProject do
       test_coverage: [tool: ExCoveralls],
       preferred_cli_env: [coveralls: :test, "coveralls.detail": :test, "coveralls.post": :test, "coveralls.html": :test],
       package: package(),
+      # DOCS
       source_url: "https://github.com/ityonemo/transport/",
+      docs: docs()
     ]
   end
 
@@ -22,7 +24,7 @@ defmodule Transport.MixProject do
     [
       {:credo, "~> 1.2", only: [:test, :dev], runtime: false},
       {:dialyxir, "~> 0.5.1", only: :dev, runtime: false},
-      {:ex_doc, "~> 0.20.2", only: :dev, runtime: false},
+      {:ex_doc, "~> 0.21", only: :dev, runtime: false},
       {:excoveralls, "~> 0.11.1", only: :test},
       {:x509, "~> 0.8.0", only: [:dev, :test]}
     ]
@@ -36,6 +38,14 @@ defmodule Transport.MixProject do
     licenses: ["MIT"],
     files: ~w(lib mix.exs README* LICENSE* VERSIONS*),
     links: %{"GitHub" => "https://github.com/ityonemo/transport"}
+  ]
+
+  defp docs, do: [
+    main: "Transport",
+    groups_for_functions: [
+      "Server Functions": &(&1[:section] == :server),
+      "Client Functions": &(&1[:section] == :client),
+    ]
   ]
 
 end
