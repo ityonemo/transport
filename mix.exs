@@ -1,9 +1,9 @@
-defmodule Transporter.MixProject do
+defmodule Transport.MixProject do
   use Mix.Project
 
   def project do
     [
-      app: :transporterer,
+      app: :transport,
       version: "0.1.0",
       elixir: "~> 1.10",
       elixirc_paths: elixirc_paths(Mix.env()),
@@ -14,7 +14,7 @@ defmodule Transporter.MixProject do
       package: package(),
       description: "an abstraction api and helpers for TCP and TLS",
       # DOCS
-      source_url: "https://github.com/ityonemo/transporter/",
+      source_url: "https://github.com/ityonemo/transport/",
       docs: docs()
     ]
   end
@@ -35,14 +35,14 @@ defmodule Transporter.MixProject do
   defp elixirc_paths(_), do: ["lib"]
 
   defp package, do: [
-    name: "erps",
+    name: "transport",
     licenses: ["MIT"],
     files: ~w(lib mix.exs README* LICENSE* VERSIONS*),
-    links: %{"GitHub" => "https://github.com/ityonemo/transporter"}
+    links: %{"GitHub" => "https://github.com/ityonemo/transport"}
   ]
 
   defp docs, do: [
-    main: "Transporter",
+    main: "Transport",
     groups_for_functions: [
       "Server Functions": &(&1[:section] == :server),
       "Client Functions": &(&1[:section] == :client),

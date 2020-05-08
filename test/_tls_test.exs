@@ -1,7 +1,7 @@
 defmodule TransportTest.TlsTest do
   use ExUnit.Case, async: true
 
-  alias Transporter.Tls
+  alias Transport.Tls
   import TransportTest.TlsOpts
 
   test "passive tls clients work" do

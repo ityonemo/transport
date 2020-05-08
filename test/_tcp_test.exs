@@ -1,7 +1,7 @@
 defmodule TransportTest.TcpTest do
   use ExUnit.Case, async: true
 
-  alias Transporter.Tcp
+  alias Transport.Tcp
 
   test "passive tcp clients work" do
     alias TransportTest.PassiveClient, as: Client

@@ -1,5 +1,5 @@
 
-defmodule Transporter.Tls do
+defmodule Transport.Tls do
 
   @moduledoc """
   implements a two-way TLS transport strategy.
@@ -9,20 +9,20 @@ defmodule Transporter.Tls do
   WAN.
   """
 
-  @behaviour Transporter
+  @behaviour Transport
 
-  @type socket :: Transporter.socket
+  @type socket :: Transport.socket
 
   @spec send(socket, iodata) :: :ok | {:error, term}
-  @doc "Callback implementation for `c:Transporter.send/2`, via `:ssl.send/2`."
+  @doc "Callback implementation for `c:Transport.send/2`, via `:ssl.send/2`."
   defdelegate send(sock, content), to: :ssl
 
   @spec recv(socket, non_neg_integer) :: {:ok, binary} | {:error, term}
-  @doc "Callback implementation for `c:Transporter.recv/2`, via `:ssl.recv/2`."
+  @doc "Callback implementation for `c:Transport.recv/2`, via `:ssl.recv/2`."
   defdelegate recv(sock, length), to: :ssl
 
   @spec recv(socket, non_neg_integer, timeout) :: {:ok, binary} | {:error, term}
-  @doc "Callback implementation for `c:Transporter.recv/3`, via `:ssl.recv/3`."
+  @doc "Callback implementation for `c:Transport.recv/3`, via `:ssl.recv/3`."
   defdelegate recv(sock, length, timeout), to: :ssl
 
   @impl true
@@ -34,15 +34,15 @@ defmodule Transporter.Tls do
 
   @doc section: :server
   @doc """
-  Callback implementation for `c:Transporter.listen/2`.
+  Callback implementation for `c:Transport.listen/2`.
 
-  NB: `Transporter.Tls` defaults to using a binary tcp port.
+  NB: `Transport.Tls` defaults to using a binary tcp port.
   """
-  defdelegate listen(port, options \\ []), to: Transporter.Tcp
+  defdelegate listen(port, options \\ []), to: Transport.Tcp
 
   @spec accept(socket, timeout) :: {:ok, socket} | {:error, term}
   @doc section: :server
-  @doc "Callback implementation for `c:Transporter.accept/2`."
+  @doc "Callback implementation for `c:Transport.accept/2`."
   defdelegate accept(sock, timeout), to: :gen_tcp
 
   @impl true
@@ -58,8 +58,8 @@ defmodule Transporter.Tls do
   NB: in many point-to-point trusted TLS operations you will want to perform a
   symmetric check against the identity of the inbound client.  Normally you
   wouldn't do this for web (e.g. HTTPS) TLS because public clients typically
-  don't have a static DNS-assigned address.  Users of Transporter should strongly
-  consider using this feature.  To perform a check against the client, `Transporter`
+  don't have a static DNS-assigned address.  Users of Transport should strongly
+  consider using this feature.  To perform a check against the client, `Transport`
   has implemented `:customize_hostname_check` for servers as you would in the
   normal client SSL case.
 
@@ -88,8 +88,8 @@ defmodule Transporter.Tls do
   @spec connect(term, :inet.port_number) :: {:ok, socket} | {:error, term}
   @spec connect(term, :inet.port_number, keyword) :: {:ok, socket} | {:error, term}
   @doc section: :client
-  @doc "Callback implementation for `c:Transporter.connect/3`."
-  defdelegate connect(host, port, options \\ []), to: Transporter.Tcp
+  @doc "Callback implementation for `c:Transport.connect/3`."
+  defdelegate connect(host, port, options \\ []), to: Transport.Tcp
 
   @impl true
   @spec upgrade(socket :: socket, options :: keyword) ::
@@ -106,7 +106,7 @@ defmodule Transporter.Tls do
   If you would like to timeout on the ssl upgrade process, pass the timeout
   value to the keyword `:timeout` in options
 
-  Callback implementation for `c:Transporter.upgrade/2`.
+  Callback implementation for `c:Transport.upgrade/2`.
   """
   def upgrade(socket, options!) do
     socket_opts = Keyword.drop(options!, [:tls_opts, :timeout])

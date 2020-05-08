@@ -6,8 +6,8 @@ defmodule TransportTest.TlsErrors.UnencryptedTest do
 
   import TransportTest.TlsOpts
 
-  alias Transporter.Tcp
-  alias Transporter.Tls
+  alias Transport.Tcp
+  alias Transport.Tls
   alias TransportTest.PassiveClient, as: Client
   alias TransportTest.PassiveServer, as: Server
 

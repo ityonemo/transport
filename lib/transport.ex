@@ -1,4 +1,4 @@
-defmodule Transporter do
+defmodule Transport do
   @moduledoc """
   Encapsulates a common API which describes a transport strategy.
 
@@ -8,10 +8,10 @@ defmodule Transporter do
   some best practices for securing your WAN transmissions.
 
   Currently the available transport strategies are:
-  - `Transporter.Tcp`: unencrypted, unauthenticated communication.  Only
+  - `Transport.Tcp`: unencrypted, unauthenticated communication.  Only
     appropriate in `:dev` and `:test` environments.  Allows you to simplify
     early stage and test deployments.
-  - `Transporter.Tls`: two-way authenticated, encrypted communication, using
+  - `Transport.Tls`: two-way authenticated, encrypted communication, using
     X509 TLS encryption.  This is the general use case for point-to-point
     API services including over untrusted networks.
 
