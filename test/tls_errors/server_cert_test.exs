@@ -5,7 +5,7 @@ defmodule TransportTest.TlsErrors.ServerCertTest do
 
   import TransportTest.TlsOpts
 
-  alias Transport.Tls
+  alias Transporter.Tls
   alias TransportTest.PassiveClient, as: Client
   alias TransportTest.PassiveServer, as: Server
 

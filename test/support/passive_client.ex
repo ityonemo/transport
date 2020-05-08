@@ -1,3 +1,5 @@
+# credo:disable-for-this-file Credo.Check.Readability.ModuleDoc
+
 defmodule TransportTest.PassiveClient do
 
   # implements an active: false client that is generic between TCP and SSL.

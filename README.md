@@ -1,4 +1,4 @@
-# Transport
+# Transporter
 
 ## Abstraction API for TCP/TLS
 
@@ -13,16 +13,16 @@ Pull requests and reviews strongly welcome.
 
 ## Installation
 
-The package can be installed by adding `transport` to your list of
+The package can be installed by adding `transporter` to your list of
 dependencies in `mix.exs`:
 
 ```elixir
 def deps do
   [
-    {:transport, "~> 0.1.0"}
+    {:transporter, "~> 0.1.0"}
   ]
 end
 ```
 
-Documentation can be found at [https://hexdocs.pm/transport](https://hexdocs.pm/transport).
+Documentation can be found at [https://hexdocs.pm/transporter](https://hexdocs.pm/transporter).
 

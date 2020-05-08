@@ -1,3 +1,5 @@
+# credo:disable-for-this-file Credo.Check.Readability.ModuleDoc
+
 defmodule TransportTest.ActiveServer do
 
   # implements an active: true server that is generic between TCP and SSL.

@@ -1,3 +1,5 @@
+# credo:disable-for-this-file Credo.Check.Readability.ModuleDoc
+
 defmodule TransportTest.TlsFileGen do
 
   alias X509.Certificate
@@ -48,4 +50,3 @@ defmodule TransportTest.TlsFileGen do
     File.write!(cert_path, Certificate.to_pem(cert))
   end
 end
-

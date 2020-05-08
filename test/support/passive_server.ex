@@ -1,3 +1,5 @@
+# credo:disable-for-this-file Credo.Check.Readability.ModuleDoc
+
 defmodule TransportTest.PassiveServer do
 
   # implements an active: false server that is generic between TCP and SSL.
@@ -11,7 +13,6 @@ defmodule TransportTest.PassiveServer do
   end
 
   def init(state = %{transport: transport}) do
-    # TODO: make binary/not active the defaults
     {:ok, socket} = transport.listen(0)
     {:ok, port}   = :inet.port(socket)
     Process.send_after(self(), {:accept, socket}, 0)
